@@ -35,7 +35,7 @@ namespace HotelListing
             options
             .UseSqlServer(Configuration
             .GetConnectionString("DefaultConnection")
-            ));
+            ));    
 
             services.AddControllers().AddNewtonsoftJson(Opt => 
             Opt.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore);
@@ -50,6 +50,10 @@ namespace HotelListing
             services.AddAutoMapper(typeof(MapperInitializer));
 
             services.AddTransient<IUnitOfWork, UnitOfWork>();
+
+            services.AddAuthentication();
+
+            services.ConfigureIdentity();
 
             services.AddSwaggerGen(c =>
             {
