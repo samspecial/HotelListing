@@ -15,9 +15,9 @@ namespace HotelListing.Services
 {
     public class AuthManager : IAuthManager
     {
-        public readonly UserManager<ApiUser> _userManager;
+        private readonly UserManager<ApiUser> _userManager;
 
-        public readonly IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
         private ApiUser _user;
         public AuthManager(UserManager<ApiUser> userManager, IConfiguration configuration)
         {
@@ -30,6 +30,7 @@ namespace HotelListing.Services
             var signingCredentials = GetSignInCredentials();
             var claims = await GetClaims();
             var token = GetTokenOptions(signingCredentials, claims);
+            var result = new JwtSecurityTokenHandler().WriteToken(token);
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
